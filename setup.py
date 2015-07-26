@@ -7,8 +7,8 @@ setup(name='scwsutil',
       packages=['scwsutil'],
       data_files=[('dict', ['dict/userdic.txt', 'dict/stopword.txt', 'dict/emotionlist.txt', 'dict/one_word_white_list.txt'])],
       install_requires=[
-          'pyscws',
       ],
       dependency_links=[
+          'https://github.com/linhaobuaa/pyscws.git'
       ],
 )
