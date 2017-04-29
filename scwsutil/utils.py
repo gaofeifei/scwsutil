@@ -155,3 +155,27 @@ def cut_filter(text):
         p = re.compile(i)
         text = p.sub('', text)
     return text
+
+cx_dict_noun = set(['Ng','n','nr','ns','nt','nz']) # 关键词词性词典, 保留名词
+
+EXTRA_BLACK_LIST_PATH = os.path.join(ABSOLUTE_DICT_PATH, "black.txt")
+
+def load_black_words():
+    one_words = set([line.strip('\r\n') for line in file(EXTRA_BLACK_LIST_PATH)])
+    return one_words
+
+black_words = load_black_words()
+
+def cut_words_noun(s, text):
+    '''分词, 加入黑名单过滤单个词，保留名词
+       input
+           texts: 输入text，utf-8
+       output:
+           terms: 关键词list
+    '''
+    if not isinstance(text, str):
+        raise ValueError("cut words input text must be string")
+
+    cx_terms = cut(s, text, cx=True)
+
+    return [term for term, cx in cx_terms if cx in cx_dict_noun and term not in black_words]
